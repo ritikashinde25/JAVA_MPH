@@ -1,0 +1,40 @@
+package com.test.service;
+
+import javax.sql.DataSource;
+
+import org.springframework.boot.autoconfigure.AutoConfiguration;
+//import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+
+import com.test.service.MyServiceProperties;
+
+@AutoConfiguration
+@EnableConfigurationProperties(MyServiceProperties.class)
+public class MyServiceAutoConfiguration {
+		
+		@Bean
+		@ConditionalOnProperty(
+				prefix = "my.service",
+				name = "enabled",
+				havingValue = "true",
+				matchIfMissing = true
+			)
+		public MyService myService()
+		{
+			return new MyService();
+		}
+	/*	
+		@Bean
+		public DataSource dataSource() 
+		{
+			return DataSourceBuilder.create()
+					.url()
+					.username()
+					.password()
+					.driverClassName()
+					.build();
+		}
+		*/
+}
